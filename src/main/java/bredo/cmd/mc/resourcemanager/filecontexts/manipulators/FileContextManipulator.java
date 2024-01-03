@@ -1,188 +1,151 @@
-package bredo.cmd.mc.resourcemanager.resources.manipulators;
+package bredo.cmd.mc.resourcemanager.filecontexts.manipulators;
 
-import bredo.cmd.mc.resourcemanager.data.validator.DataValidator;
+import bredo.cmd.mc.resourcemanager.filecontexts.manager.FileContextManager;
+import bredo.cmd.mc.resourcemanager.filecontexts.utilities.FileContext;
 import bredo.cmd.mc.resourcemanager.filecontexts.validator.FileContextValidator;
-import bredo.cmd.mc.resourcemanager.resources.managers.ResourceManager;
-import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
-import bredo.cmd.mc.resourcemanager.resources.validator.ResourceValidator;
-import bredo.cmd.mc.resourcemanager.serialization.validator.SerializationValidator;
 import bredo.cmd.mc.unilink.validators.Validator;
 
-public final class ResourceManipulator {
+public final class FileContextManipulator {
 
     //<editor-fold desc="Constructor">
-    private ResourceManipulator() {
+    private FileContextManipulator() {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Current Resource">
-    private static String currentResource;
+    //<editor-fold desc="Current FileContext">
+    private static String currentFileContext;
 
-    public static void selectResource(final String resource) {
-        Validator.validateString(resource, "Resource name", true);
-        currentResource = resource;
+    public static void selectFileContext(final String fileContext) {
+        Validator.validateString(fileContext, "FileContext name", true);
+        currentFileContext = fileContext;
     }
 
-    public static void deselectResource() {
-        currentResource = null;
+    public static void deselectFileContext() {
+        currentFileContext = null;
     }
 
-    public static String currentResource() {
-        return currentResource;
+    public static String currentFileContext() {
+        return currentFileContext;
     }
 
-    private static void validateCurrentResource() {
-        ResourceValidator.validateResourceName(currentResource());
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="FileContextCallKey">
-
-    /**
-     * Set the FileContextCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param fileContextCallKey
-     */
-    public static void setFileContextCallKey(final String resourceName, final String fileContextCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        FileContextValidator.validateFileContextName(fileContextCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setFileContextCallKey(fileContextCallKey);
-    }
-
-    /**
-     * Set the FileContextCallKey from the current selected resource name.
-     *
-     * @param fileContextCallKey
-     */
-    public static void setFileContextCallKey(final String fileContextCallKey) {
-        validateCurrentResource();
-        setFileContextCallKey(currentResource(), fileContextCallKey);
-    }
-
-    /**
-     * Return the FileContextCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getFileContextCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getFileContextCallKey();
-    }
-
-    /**
-     * Return the FileContextCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getFileContextCallKey() {
-        validateCurrentResource();
-        return getFileContextCallKey(currentResource());
+    private static void validateCurrentFileContext() {
+        FileContextValidator.validateFileContextName(currentFileContext());
     }
     //</editor-fold>
 
-    //<editor-fold desc="SerializationCallKey">
-
-    /**
-     * Set the SerializationCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param serializationCallKey
-     */
-    public static void setSerializationCallKey(final String resourceName, final String serializationCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        SerializationValidator.validateSerializationName(serializationCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setSerializationCallKey(serializationCallKey);
+    //<editor-fold desc="SetFile">
+    public static void setFile(final String fileContextName, final String fileName, final String fileDirectory, final String fileExtension, final boolean usePluginFolder) {
+        setFileName(fileContextName, fileName);
+        setFileDirectory(fileContextName, fileDirectory);
+        setFileExtension(fileContextName, fileExtension);
+        setUsePluginFolder(fileContextName, usePluginFolder);
     }
 
-    /**
-     * Set the SerializationCallKey from the current selected resource name.
-     *
-     * @param serializationCallKey
-     */
-    public static void setSerializationCallKey(final String serializationCallKey) {
-        validateCurrentResource();
-        setSerializationCallKey(currentResource(), serializationCallKey);
-    }
-
-    /**
-     * Return the SerializationCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getSerializationCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getSerializationCallKey();
-    }
-
-    /**
-     * Return the SerializationCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getSerializationCallKey() {
-        validateCurrentResource();
-        return getSerializationCallKey(currentResource());
+    public static void setFile(final String fileName, final String fileDirectory, final String fileExtension, final boolean usePluginFolder) {
+        validateCurrentFileContext();
+        setFileName(currentFileContext(), fileName);
+        setFileDirectory(currentFileContext(), fileDirectory);
+        setFileExtension(currentFileContext(), fileExtension);
+        setUsePluginFolder(currentFileContext(), usePluginFolder);
     }
     //</editor-fold>
 
-    //<editor-fold desc="DataCallKey">
-
-    /**
-     * Set the DataCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param dataCallKey
-     */
-    public static void setDataCallKey(final String resourceName, final String dataCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        DataValidator.validateDataName(dataCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setDataCallKey(dataCallKey);
+    //<editor-fold desc="FileName">
+    public static void setFileName(final String fileContextName, final String fileName) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        Validator.validateString(fileName, "File name", true);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        fileContext.setFileName(fileName);
     }
 
-    /**
-     * Set the DataCallKey from the current selected resource name.
-     *
-     * @param dataCallKey
-     */
-    public static void setDataCallKey(final String dataCallKey) {
-        validateCurrentResource();
-        setDataCallKey(currentResource(), dataCallKey);
+    public static void setFileName(final String fileName) {
+        validateCurrentFileContext();
+        setFileName(currentFileContext(), fileName);
     }
 
-    /**
-     * Return the DataCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getDataCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getDataCallKey();
+    public static String getFileName(final String fileContextName) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        return fileContext.getFileName();
     }
 
-    /**
-     * Return the DataCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getDataCallKey() {
-        validateCurrentResource();
-        return getDataCallKey(currentResource());
+    public static String getFileName() {
+        validateCurrentFileContext();
+        return getFileName(currentFileContext());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="FileDirectory">
+    public static void setFileDirectory(final String fileContextName, final String fileDirectory) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        Validator.validateString(fileDirectory, "File directory", false);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        fileContext.setFileDirectory(fileDirectory);
+    }
+
+    public static void setFileDirectory(final String fileDirectory) {
+        validateCurrentFileContext();
+        setFileDirectory(currentFileContext(), fileDirectory);
+    }
+
+    public static String getFileDirectory(final String fileContextName) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        return fileContext.getFileDirectory();
+    }
+
+    public static String getFileDirectory() {
+        validateCurrentFileContext();
+        return getFileDirectory(currentFileContext());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="FileExtension">
+    public static void setFileExtension(final String fileContextName, final String fileExtension) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        Validator.validateString(fileExtension, "File extension", false);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        fileContext.setFileExtension(fileExtension);
+    }
+
+    public static void setFileExtension(final String fileExtension) {
+        validateCurrentFileContext();
+        setFileExtension(currentFileContext(), fileExtension);
+    }
+
+    public static String getFileExtension(final String fileContextName) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        return fileContext.getFileExtension();
+    }
+
+    public static String getFileExtension() {
+        validateCurrentFileContext();
+        return getFileExtension(currentFileContext());
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="UsePluginFolder">
+    public static void setUsePluginFolder(final String fileContextName, final boolean usePluginFolder) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        fileContext.setUsePluginFolder(usePluginFolder);
+    }
+
+    public static void setUsePluginFolder(final boolean usePluginFolder) {
+        validateCurrentFileContext();
+        setUsePluginFolder(currentFileContext(), usePluginFolder);
+    }
+
+    public static boolean usePluginFolder(final String fileContextName) {
+        FileContextValidator.validateFileContextName(fileContextName);
+        final FileContext fileContext = FileContextManager.fileContextRegistry().retrieveElement(fileContextName);
+        return fileContext.isUsePluginFolder();
+    }
+
+    public static boolean usePluginFolder() {
+        validateCurrentFileContext();
+        return usePluginFolder(currentFileContext());
     }
     //</editor-fold>
 }

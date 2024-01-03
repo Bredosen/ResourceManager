@@ -1,34 +1,35 @@
 package bredo.cmd.mc.resourcemanager.serialization.types;
 
 import bredo.cmd.mc.resourcemanager.data.utilities.Data;
-import bredo.cmd.mc.resourcemanager.filecontexts.utilities.FileContext;
 import bredo.cmd.mc.resourcemanager.serialization.interfaces.ISerialization;
 import bredo.cmd.mc.unilink.utilities.Registry;
 
-public final class JsonSerialization implements ISerialization {
+import java.io.File;
+
+public final class BytesSerialization implements ISerialization {
 
     //<editor-fold desc="Singleton & Constructor">
-    private final static JsonSerialization SINGLETON;
+    private final static BytesSerialization SINGLETON;
 
     static {
-        SINGLETON = new JsonSerialization();
+        SINGLETON = new BytesSerialization();
     }
 
-    private JsonSerialization() {
+    private BytesSerialization() {
     }
 
-    public static JsonSerialization getInstance() {
+    public static BytesSerialization getInstance() {
         return SINGLETON;
     }
     //</editor-fold>
 
     @Override
-    public void save(final FileContext fileContext, final Registry<Data> dataRegistry) {
+    public void save(final File file, final Registry<Data> dataRegistry) {
 
     }
 
     @Override
-    public void load(final Registry<Data> dataRegistry, final FileContext fileContext) {
+    public void load(final Registry<Data> dataRegistry, final File file) {
 
     }
 }

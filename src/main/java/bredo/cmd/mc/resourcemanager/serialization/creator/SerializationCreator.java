@@ -1,13 +1,19 @@
-package bredo.cmd.mc.resourcemanager.filecontexts.creator;
+package bredo.cmd.mc.resourcemanager.serialization.creator;
 
-import bredo.cmd.mc.resourcemanager.filecontexts.manager.FileManager;
-import bredo.cmd.mc.resourcemanager.filecontexts.utilities.FileContext;
+import bredo.cmd.mc.resourcemanager.serialization.manager.SerializationManager;
+import bredo.cmd.mc.resourcemanager.serialization.types.JsonSerialization;
+import bredo.cmd.mc.resourcemanager.serialization.utilities.Serialization;
 
-public final class FileContextCreator {
+public final class SerializationCreator {
 
     public static void create(final String name) {
-        final FileContext fileContext = FileContext.createInstance(name);
+        // Create serialization instance.
+        final Serialization serialization = Serialization.createInstance(name);
 
-        FileManager.fileContextRegistry().registerElement(fileContext);
+        // Set serialization to Json serialization.
+        serialization.setISerialization(JsonSerialization.getInstance());
+
+        // Register serialization.
+        SerializationManager.serializationRegistry().registerElement(serialization);
     }
 }

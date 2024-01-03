@@ -1,35 +1,31 @@
-package bredo.cmd.mc.resourcemanager.filecontexts.manager;
+package bredo.cmd.mc.resourcemanager.serialization.manager;
 
-import bredo.cmd.mc.resourcemanager.filecontexts.utilities.FileContext;
+import bredo.cmd.mc.resourcemanager.serialization.utilities.Serialization;
 import bredo.cmd.mc.unilink.utilities.Registry;
 
-public final class FileManager {
+public final class SerializationManager {
 
     //<editor-fold desc="Singleton & Constructor">
-    private final static FileManager SINGLETON;
+    private final static SerializationManager SINGLETON;
 
     static {
-        SINGLETON = new FileManager();
+        SINGLETON = new SerializationManager();
     }
 
-    private FileManager() {
-        fileContextRegistry = new Registry<>("File Context");
+    private SerializationManager() {
+        serializationRegistry = new Registry<>("Serialization");
     }
 
-    public static FileManager fileManager() {
+    public static SerializationManager serializationManager() {
         return SINGLETON;
     }
     //</editor-fold>
 
-    public void initialize() {
-        //TODO: Something
-    }
-
     //<editor-fold desc="Resource Registry">
-    private final Registry<FileContext> fileContextRegistry;
+    private final Registry<Serialization> serializationRegistry;
 
-    public static Registry<FileContext> fileContextRegistry() {
-        return fileManager().fileContextRegistry;
+    public static Registry<Serialization> serializationRegistry() {
+        return serializationManager().serializationRegistry;
     }
     //</editor-fold>
 }

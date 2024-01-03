@@ -1,16 +1,15 @@
-package bredo.cmd.mc.resourcemanager.resources.validator;
+package bredo.cmd.mc.resourcemanager.serialization.validator;
 
-import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
-import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
+import bredo.cmd.mc.resourcemanager.serialization.utilities.Serialization;
 import bredo.cmd.mc.unilink.validators.Validator;
 
-public final class ResourceValidator {
+public final class SerializationValidator {
 
-    public static void validateResource(final Resource resource) {
-        Validator.validateObject(resource, "Resource");
+    public static void validateSerialization(final Serialization serialization) {
+        Validator.validateObject(serialization, "Serialization");
     }
 
-    public static void validateResourceName(final String resourceName) {
-        Validator.validateString(resourceName, true, "Resource name");
+    public static void validateSerializationName(final String serializationName) {
+        Validator.validateString(serializationName, true, "Serialization name");
     }
 }

@@ -3,33 +3,29 @@ package bredo.cmd.mc.resourcemanager.data.manager;
 import bredo.cmd.mc.resourcemanager.data.utilities.DataStore;
 import bredo.cmd.mc.unilink.utilities.Registry;
 
-public final class DataManager {
+public final class DataStoreManager {
 
     //<editor-fold desc="Singleton & Constructor">
-    private final static DataManager SINGLETON;
+    private final static DataStoreManager SINGLETON;
 
     static {
-        SINGLETON = new DataManager();
+        SINGLETON = new DataStoreManager();
     }
 
-    private DataManager() {
-        dataRegistry = new Registry<>("DataStore");
+    private DataStoreManager() {
+        dataStoreRegistry = new Registry<>("DataStore");
     }
 
-    public static DataManager dataManager() {
+    public static DataStoreManager dataStoreManager() {
         return SINGLETON;
     }
     //</editor-fold>
 
-    public void initialize() {
-        //TODO: Something
-    }
-
     //<editor-fold desc="Resource Registry">
-    private final Registry<DataStore> dataRegistry;
+    private final Registry<DataStore> dataStoreRegistry;
 
-    public static Registry<DataStore> dataRegistry() {
-        return dataManager().dataRegistry;
+    public static Registry<DataStore> dataStoreRegistry() {
+        return dataStoreManager().dataStoreRegistry;
     }
     //</editor-fold>
 }

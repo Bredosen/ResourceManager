@@ -1,214 +1,61 @@
-package bredo.cmd.mc.resourcemanager.resources.manipulators;
+package bredo.cmd.mc.resourcemanager.serialization.manipulators;
 
-import bredo.cmd.mc.resourcemanager.data.validator.DataStoreValidator;
-import bredo.cmd.mc.resourcemanager.filecontexts.validator.FileContextValidator;
-import bredo.cmd.mc.resourcemanager.interfaces.IDefaultsSetter;
-import bredo.cmd.mc.resourcemanager.resources.managers.ResourceManager;
-import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
-import bredo.cmd.mc.resourcemanager.resources.validator.ResourceValidator;
+import bredo.cmd.mc.resourcemanager.serialization.interfaces.ISerialization;
+import bredo.cmd.mc.resourcemanager.serialization.manager.SerializationManager;
+import bredo.cmd.mc.resourcemanager.serialization.utilities.Serialization;
 import bredo.cmd.mc.resourcemanager.serialization.validator.SerializationValidator;
 import bredo.cmd.mc.unilink.validators.Validator;
 
-public final class ResourceManipulator {
+public final class SerializationManipulator {
 
     //<editor-fold desc="Constructor">
-    private ResourceManipulator() {
+    private SerializationManipulator() {
     }
     //</editor-fold>
 
-    //<editor-fold desc="Current Resource">
-    private static String currentResource;
+    //<editor-fold desc="Current Serialization">
+    private static String currentSerialization;
 
-    public static void selectResource(final String resource) {
-        Validator.validateString(resource, "Resource name", true);
-        currentResource = resource;
+    public static void selectSerialization(final String serialization) {
+        Validator.validateString(serialization, "Serialization name", true);
+        currentSerialization = serialization;
     }
 
-    public static void deselectResource() {
-        currentResource = null;
+    public static void deselectSerialization() {
+        currentSerialization = null;
     }
 
-    public static String currentResource() {
-        return currentResource;
+    public static String currentSerialization() {
+        return currentSerialization;
     }
 
-    private static void validateCurrentResource() {
-        ResourceValidator.validateResourceName(currentResource());
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="FileContextCallKey">
-
-    /**
-     * Set the FileContextCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param fileContextCallKey
-     */
-    public static void setFileContextCallKey(final String resourceName, final String fileContextCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        FileContextValidator.validateFileContextName(fileContextCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setFileContextCallKey(fileContextCallKey);
-    }
-
-    /**
-     * Set the FileContextCallKey from the current selected resource name.
-     *
-     * @param fileContextCallKey
-     */
-    public static void setFileContextCallKey(final String fileContextCallKey) {
-        validateCurrentResource();
-        setFileContextCallKey(currentResource(), fileContextCallKey);
-    }
-
-    /**
-     * Return the FileContextCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getFileContextCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getFileContextCallKey();
-    }
-
-    /**
-     * Return the FileContextCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getFileContextCallKey() {
-        validateCurrentResource();
-        return getFileContextCallKey(currentResource());
+    private static void validateCurrentSerialization() {
+        SerializationValidator.validateSerializationName(currentSerialization());
     }
     //</editor-fold>
 
-    //<editor-fold desc="SerializationCallKey">
-
-    /**
-     * Set the SerializationCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param serializationCallKey
-     */
-    public static void setSerializationCallKey(final String resourceName, final String serializationCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        SerializationValidator.validateSerializationName(serializationCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setSerializationCallKey(serializationCallKey);
+    //<editor-fold desc="ISerialization">
+    public static void setISerialization(final String serializationName, final ISerialization iSerialization) {
+        SerializationValidator.validateSerializationName(serializationName);
+        Validator.validateObject(iSerialization, "ISerialization");
+        final Serialization serialization = SerializationManager.serializationRegistry().retrieveElement(serializationName);
+        serialization.setISerialization(iSerialization);
     }
 
-    /**
-     * Set the SerializationCallKey from the current selected resource name.
-     *
-     * @param serializationCallKey
-     */
-    public static void setSerializationCallKey(final String serializationCallKey) {
-        validateCurrentResource();
-        setSerializationCallKey(currentResource(), serializationCallKey);
+    public static void setISerialization(final ISerialization iSerialization) {
+        validateCurrentSerialization();
+        setISerialization(currentSerialization(), iSerialization);
     }
 
-    /**
-     * Return the SerializationCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getSerializationCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getSerializationCallKey();
+    public static ISerialization getISerialization(final String serializationName) {
+        SerializationValidator.validateSerializationName(serializationName);
+        final Serialization serialization = SerializationManager.serializationRegistry().retrieveElement(serializationName);
+        return serialization.getiSerialization();
     }
 
-    /**
-     * Return the SerializationCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getSerializationCallKey() {
-        validateCurrentResource();
-        return getSerializationCallKey(currentResource());
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="DataCallKey">
-
-    /**
-     * Set the DataCallKey from the resource name.
-     *
-     * @param resourceName
-     * @param dataCallKey
-     */
-    public static void setDataCallKey(final String resourceName, final String dataCallKey) {
-        ResourceValidator.validateResourceName(resourceName);
-        DataStoreValidator.validateDataStoreName(dataCallKey);
-
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setDataCallKey(dataCallKey);
-    }
-
-    /**
-     * Set the DataCallKey from the current selected resource name.
-     *
-     * @param dataCallKey
-     */
-    public static void setDataCallKey(final String dataCallKey) {
-        validateCurrentResource();
-        setDataCallKey(currentResource(), dataCallKey);
-    }
-
-    /**
-     * Return the DataCallKey from the resource name.
-     *
-     * @param resourceName
-     *
-     * @return
-     */
-    public static String getDataCallKey(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getDataCallKey();
-    }
-
-    /**
-     * Return the DataCall Key from the current selected resource name.
-     *
-     * @return
-     */
-    public static String getDataCallKey() {
-        validateCurrentResource();
-        return getDataCallKey(currentResource());
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="IDefaultsSetter">
-    public static void setIDefaultsSetter(final String resourceName, final IDefaultsSetter iDefaultsSetter) {
-        ResourceValidator.validateResourceName(resourceName);
-        Validator.validateObject(iDefaultsSetter, "IDefaultsSetter");
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        resource.setIDefaultsSetter(iDefaultsSetter);
-    }
-
-    public static void setIDefaultsSetter(final IDefaultsSetter iDefaultsSetter) {
-        validateCurrentResource();
-        setIDefaultsSetter(currentResource(), iDefaultsSetter);
-    }
-
-    public static IDefaultsSetter getIDefaultsSetter(final String resourceName) {
-        ResourceValidator.validateResourceName(resourceName);
-        final Resource resource = ResourceManager.resourceRegistry().retrieveElement(resourceName);
-        return resource.getiDefaultsSetter();
-    }
-
-    public static IDefaultsSetter getIDefaultsSetter() {
-        validateCurrentResource();
-        return getIDefaultsSetter(currentResource());
+    public static ISerialization getISerialization() {
+        validateCurrentSerialization();
+        return getISerialization(currentSerialization());
     }
     //</editor-fold>
 }

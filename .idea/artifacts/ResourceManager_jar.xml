@@ -4,6 +4,7 @@
     <root id="archive" name="ResourceManager.jar">
       <element id="module-output" name="ResourceManager.main" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../UniLink/out/artifacts/UniLink_jar/UniLink.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
     </root>
   </artifact>
 </component>

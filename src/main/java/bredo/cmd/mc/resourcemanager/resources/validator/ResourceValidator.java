@@ -1,15 +1,16 @@
-package bredo.cmd.mc.resourcemanager.filecontexts.validator;
+package bredo.cmd.mc.resourcemanager.resources.validator;
 
-import bredo.cmd.mc.resourcemanager.filecontexts.utilities.FileContext;
+import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
+import bredo.cmd.mc.resourcemanager.resources.utilities.Resource;
 import bredo.cmd.mc.unilink.validators.Validator;
 
-public final class FileContextValidator {
+public final class ResourceValidator {
 
-    public static void validateFileContext(final FileContext fileContext) {
-        Validator.validateObject(fileContext, "FileContext");
+    public static void validateResource(final Resource resource) {
+        Validator.validateObject(resource, "Resource");
     }
 
-    public static void validateFileContextName(final String fileContextName) {
-        Validator.validateString(fileContextName, true, "FileContext name");
+    public static void validateResourceName(final String resourceName) {
+        Validator.validateString(resourceName, true, "Resource name");
     }
 }

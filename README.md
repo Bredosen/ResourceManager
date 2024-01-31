@@ -12,11 +12,11 @@ To illustrate the practicality and ease of use provided by ResourceManager, cons
       
 	      @Override  
 	      public void onLoad() {  
-        // Initialize a new resource instance identified by the name "config".  
+                    // Initialize a new resource instance identified by the name "config".  
 		    // This step is crucial for setting up the configuration resource before the plugin is fully enabled.
 		    ResourceCreator.create("config");  
       
-        // Configure the "config" resource with specific file attributes.  
+                    // Configure the "config" resource with specific file attributes.  
 		    // Parameters: 
 		    //  - "Config": The file name. This determines the name of the file as it will appear on the filesystem. 
 		    //  - "": The directory path. An empty string indicates that the file will be located in the root of the specified location (plugin folder if the 5th parameter is true). 
@@ -25,7 +25,7 @@ To illustrate the practicality and ease of use provided by ResourceManager, cons
 		    // This command initializes the "config" resource file with the name "Config.yml" directly inside the plugin's folder, ensuring it's ready for use. 	
 		    FileContextManipulator.setFile("config", "Config", "", "yml", true);  
       
-        // Assign default settings to the "config" resource using a custom defaults setter.  
+                    // Assign default settings to the "config" resource using a custom defaults setter.  
 		    // This step is essential for ensuring that the "config" resource has a predefined set of values, 
 		    // which can later be customized or extended by the plugin or its users. 
 		    ResourceManipulator.setIDefaultsSetter("config", configDefaultsSetter);  
@@ -33,34 +33,34 @@ To illustrate the practicality and ease of use provided by ResourceManager, cons
       
 	      @Override  
 	      public void onEnable() {  
-        // Load the "config" resource, applying default values before attempting to read existing configuration from the file.  
+                    // Load the "config" resource, applying default values before attempting to read existing configuration from the file.  
 		    // This ensures that any missing settings are initialized with default values, providing a complete configuration set.
 		    ResourceState.load("config", true);  
       
-        // Persist the current state of the "config" resource to its corresponding file.  
+                    // Persist the current state of the "config" resource to its corresponding file.  
 		    // This operation is crucial for saving any changes made to the configuration during the plugin's runtime,
 		    // ensuring that they are retained across server restarts or plugin reloads. 
 		    ResourceState.save("config");  
 	      }  
       
-      // Define a custom IDefaultsSetter implementation for the "config" resource.  
+            // Define a custom IDefaultsSetter implementation for the "config" resource.  
 	    // This interface's implementation is responsible for specifying the default data structure and values for the resource.
 	    // It is invoked whenever default values need to be loaded into the resource, such as during initialization or when resetting configurations.
 	    // The provided example sets up a simple message-of-the-day (MOTD) configuration.
 	    public final IDefaultsSetter configDefaultsSetter = dataRegistry -> {  
-	      // Create a new configuration element for the message of the day with a default welcome message.  
+	            // Create a new configuration element for the message of the day with a default welcome message.  
 		    // This element is a part of the "config" resource and can be used to display a custom message to users upon joining the server.
 		    final JsonData messageOfTheDay = new JsonData("motd");  
-        messageOfTheDay.setValue("Welcome to the server!");  
+                    messageOfTheDay.setValue("Welcome to the server!");  
       
-        // Add a descriptive comment to the MOTD configuration element, explaining its purpose.  
+                    // Add a descriptive comment to the MOTD configuration element, explaining its purpose.  
 		    // This comment can assist administrators in understanding the role of this configuration option within the file.
 		    messageOfTheDay.addComment("This is the configuration for the server's Message of the Day (MOTD).");  
       
-        // Register the MOTD element with the data registry to include it in the "config" resource.  
+                    // Register the MOTD element with the data registry to include it in the "config" resource.  
 		    // This step integrates the element into the resource, making it an official part of the configuration structure.
 		    dataRegistry.registerElement(messageOfTheDay);  
-      };  
+            };  
     }
 
 This example would typically demonstrate the straightforward process of initializing a resource, setting its default parameters, and integrating it within a project, showcasing ResourceManager's capability to streamline and enhance the development experience on SpigotMC servers.
